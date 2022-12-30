@@ -1,0 +1,38 @@
+<% layout('./layouts/layout.eta') %>
+
+<header style="display: flex; align-items: center; justify-content: center;">
+  <h1>NDZ Perimeter Violations</h1>
+</header>
+<main>
+  <table class="table">
+    <tr>
+      <th>Pilot</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Closest Distance</th>
+      <th>Last Seen</th>
+    </tr>
+    <% 
+    const timeAgo = (date) => {
+        const seconds = Math.floor((new Date() - date) / 1000);
+
+        interval = Math.floor(seconds / 60);
+        if (seconds >= 60) {
+          return interval + ' minutes ago';
+        }
+
+        if(seconds < 10) return 'just now';
+
+        return Math.floor(seconds) + ' seconds ago';
+      };
+    it.forEach(violation => { %>
+      <tr class="data">
+      <td class="data"><%= violation.pilot_name %></td>
+      <td class="data"><%= violation.email %></td>
+      <td class="data"><%= violation.phone %></td>
+      <td class="data"><%= violation.closest_distance %> m</td>
+      <td class="data"><%= timeAgo(violation.last_seen) %></td>
+      </tr>
+    <% }); %>
+  </table>
+</main>
